@@ -1,0 +1,114 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1rem;
+}
+
+.page-title { font-size: clamp(1.1rem, 2.5vw, 1.6rem); font-weight: 600; }
+
+/* ---------- Component wrapper: fluid width, adapts to its parent ---------- */
+.slider {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 12px;
+  overflow: hidden;                 /* clips off-screen slides */
+  background: #1e293b;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / .35);
+}
+
+/* ---------- Viewport mask ---------- */
+.slider__viewport { overflow: hidden; width: 100%; }
+
+/* ---------- Flex sliding track (GPU-accelerated transform) ---------- */
+.slider__track {
+  display: flex;
+  will-change: transform;
+  transition: transform 450ms cubic-bezier(.25, 1, .5, 1);
+}
+.slider__track.is-instant { transition: none; }   /* used for silent boundary jumps */
+
+.slider__slide {
+  flex: 0 0 100%;
+  aspect-ratio: 16 / 10;
+}
+.slider__slide img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;                /* no distortion, no ugly clipping */
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---------- Arrow buttons ---------- */
+.slider__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 44px; height: 44px;
+  border: 0; border-radius: 50%;
+  background: rgba(15, 23, 42, .6);
+  color: #fff;
+  font-size: 1.2rem;
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: background-color .2s ease, transform .2s ease;
+}
+.slider__btn:hover { background: rgba(15, 23, 42, .9); transform: translateY(-50%) scale(1.07); }
+.slider__btn:focus-visible, .slider__dot:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.slider__btn--prev { left: 12px; }
+.slider__btn--next { right: 12px; }
+
+/* ---------- Image counter ---------- */
+.slider__status {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  padding: 3px 10px; border-radius: 999px;
+  background: rgba(15, 23, 42, .65); color: #fff;
+  font-size: .8rem;
+}
+
+/* ---------- Indicator dots ---------- */
+.slider__dots {
+  position: absolute;
+  left: 50%; bottom: 14px;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex; gap: 8px;
+}
+.slider__dot {
+  width: 10px; height: 10px;
+  border: 0; border-radius: 50%;
+  background: rgba(255, 255, 255, .45);
+  cursor: pointer;
+  transition: background-color .3s ease, transform .3s ease;
+}
+.slider__dot.is-active { background: #fff; transform: scale(1.3); }
+
+/* ---------- Breakpoints ---------- */
+@media (max-width: 480px) {
+  .slider { border-radius: 8px; }
+  .slider__btn { width: 36px; height: 36px; font-size: 1rem; }
+  .slider__btn--prev { left: 6px; }
+  .slider__btn--next { right: 6px; }
+  .slider__slide { aspect-ratio: 4 / 3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider__track { transition-duration: 1ms; }
+}

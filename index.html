@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modular Image Slider Library</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <h1 class="page-title">Image Slider Library</h1>
+
+    <div class="slider" id="slider" aria-roledescription="carousel" aria-label="Landscape gallery">
+      <div class="slider__viewport">
+        <div class="slider__track">
+          <figure class="slider__slide"><img src="images/mustang.jpg" alt="Mustang"></figure>
+          <figure class="slider__slide"><img src="images/kathmandu.jpg" alt="Kathmandu"></figure>
+          <figure class="slider__slide"><img src="images/pokhara.jpg" alt="Pokhara"></figure>
+          <figure class="slider__slide"><img src="images/nuwakot.jpg" alt="Nuwakot"></figure>
+        </div>
+      </div>
+      <button class="slider__btn slider__btn--prev" type="button" aria-label="Previous slide">&#10094;</button>
+      <button class="slider__btn slider__btn--next" type="button" aria-label="Next slide">&#10095;</button>
+      <p class="slider__status" aria-live="polite"></p>
+      <div class="slider__dots" aria-label="Slide indicators"></div>
+    </div>
+  </main>
+
+  <script src="slider.js"></script>
+  <script>new ImageSlider(document.getElementById('slider'));</script>
+</body>
+</html>
